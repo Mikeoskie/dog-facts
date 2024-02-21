@@ -1,6 +1,7 @@
 <template>
   <div>
-    <p> {{ dogFact }}</p>
+    <p v-if="dogFact !== null"> {{ dogFact }}</p>
+    <p v-else>Cannot load a dog fact</p>
   </div>
 </template>
 
@@ -8,7 +9,7 @@
 export default {
   data(){
     return {
-      dogFact: ''
+      dogFact: null
     }
   },
   async created() {
