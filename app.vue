@@ -15,7 +15,7 @@ export default {
   },
   async created() {
     try {
-      const response = await fetch('https://dog-api.kinduff.com/api/fact')
+      const response = await fetch('https://dog-api.kinduff.com/api/facts')
       if(response.status === 200) {
         const data = await response.json()
         this.dogFact = data.facts[0]
