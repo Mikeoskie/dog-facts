@@ -6,6 +6,7 @@
     <p v-if="dogFact !== null"> {{ dogFact }}</p>
     <p v-else-if="errorMessage">{{ errorMessage }}</p>
     <p v-else><b>Loading...</b></p>
+    <button @click="refresh">Yenile!</button>
   </div>
 </template>
 
@@ -19,21 +20,32 @@ export default {
     }
   },
   async created() {
-    try {
-      await new Promise (resolve => setTimeout(resolve, 3000))
-      const response = await fetch('https://dog-api.kinduff.com/api/facts')
-      if(response.status === 200) {
-        const data = await response.json()
-        this.dogFact = data.facts[0]
-      } else {
-        this.errorMessage = `Sayfa yüklenirken bir hata oluştu: ${response.status} hata kodu`
-        console.log('API hatası', response.statusText)
+    await this.loadData();
+  },
+  methods: {
+    async loadData() {
+      try {
+        await new Promise(resolve => setTimeout(resolve, 3000));
+        const response = await fetch('https://dog-api.kinduff.com/api/facts');
+        if(response.status === 200) {
+          const data = await response.json();
+          this.dogFact = data.facts[0];
+          this.errorMessage = '';
+        } else {
+          this.errorMessage = `Sayfa yüklenirken bir hata oluştu: ${response.status} hata kodu`;
+          console.log('API hatası', response.statusText);
+        }
+        this.loadingGif = false;
       }
-      this.loadingGif = false
-    }
-    catch(error) {
-      this.errorMessage = `Sayfa yüklenirken bir hata oluştu: ${response.status} hata kodu`
-      console.log('API hatası', error.message)
+      catch(error) {
+        this.errorMessage = `Sayfa yüklenirken bir hata oluştu: ${error.message}`;
+        console.log('API hatası', error.message);
+      }
+    },
+    refresh() {
+      this.loadingGif = true;
+      this.dogFact = ''
+      this.loadData();
     }
   }
 }
