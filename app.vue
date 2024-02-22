@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <div class="image">
+  <div class="image">
       <img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="" v-if="loadingGif">
-    </div>
-    <p v-if="dogFact !== null"> {{ dogFact }}</p>
+  </div>
+  <div class="content">
+    <p v-if="dogFact">{{ dogFact }}</p>
     <p v-else-if="errorMessage">{{ errorMessage }}</p>
     <p v-else><b>Loading...</b></p>
     <button @click="refresh">Yenile!</button>
