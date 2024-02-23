@@ -1,11 +1,13 @@
 <template>
-  <div class="image">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="" v-if="loadingGif">
+  <div v-if="loading" class="loading">
+    <div class="image">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+    </div>
+    <p><b>Loading...</b></p>
   </div>
-  <div class="content">
-    <p v-if="dogFact">{{ dogFact }}</p>
-    <p v-else-if="errorMessage">{{ errorMessage }}</p>
-    <p v-else><b>Loading...</b></p>
+  <div v-else>
+    <p v-if="errorMessage">{{ errorMessage }}</p>
+    <p v-else>{{ dogFact }}</p>
     <button @click="refresh">Yenile!</button>
   </div>
 </template>
@@ -16,7 +18,7 @@ export default {
     return {
       dogFact: null,
       errorMessage: '',
-      loadingGif: true
+      loading: true
     }
   },
   async created() {
@@ -33,17 +35,17 @@ export default {
           this.errorMessage = '';
         } else {
           this.errorMessage = `Sayfa yüklenirken bir hata oluştu: ${response.status} hata kodu`;
-          console.log('API hatası', response.statusText);
+          console.log('API hatası1', response.statusText);
         }
-        this.loadingGif = false;
       }
       catch(error) {
         this.errorMessage = `Sayfa yüklenirken bir hata oluştu: ${error.message}`;
-        console.log('API hatası', error.message);
+        console.log('API hatası2', error.message);
       }
+      this.loading = false
     },
     refresh() {
-      this.loadingGif = true;
+      this.loading = true;
       this.dogFact = ''
       this.loadData();
     }
@@ -52,15 +54,14 @@ export default {
 </script>
 
  <style>
- p {
+ p, b {
     align-items: center;
     justify-content: center;
-    display: flex;
  }
- div .image {
+ div .loading {
   align-items: center;
   justify-content: center;
-  display: flex;
+  text-align: center;
  }
  img {
   border-radius: 30px;
