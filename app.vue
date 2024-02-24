@@ -5,10 +5,12 @@
     </div>
     <p><b>Loading...</b></p>
   </div>
-  <div v-else>
+  <div v-else class="content">
     <p v-if="errorMessage">{{ errorMessage }}</p>
     <p v-else>{{ dogFact }}</p>
-    <button @click="refresh">Yenile!</button>
+    <div class="button-container">
+      <button @click="refresh" class="button">Yenile!</button>
+    </div>
   </div>
 </template>
 
@@ -54,9 +56,10 @@ export default {
 </script>
 
  <style>
- p, b {
+ p, b{
     align-items: center;
     justify-content: center;
+    text-align: center;
  }
  div .loading {
   align-items: center;
@@ -68,4 +71,11 @@ export default {
   width: 150px;
   height: 150px;
  }
+  .button-container {
+    text-align: right;
+    margin-right: 25%;
+  }
+  button:hover {
+    background-color: rgb(136, 253, 136);
+  }
  </style>
